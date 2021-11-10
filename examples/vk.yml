@@ -1,0 +1,18 @@
+# This is an example configuration file for VaultKit
+
+logLevel: info # // warn/info/debug/trace
+
+address: https://127.0.0.1:8200
+token: optional vault token
+# NOTE: setting the token here takes precedence over ~/.vault-token, use with care
+
+# fallbacks if token expires / nonexistant
+approle:
+  path: auth/approle/login # optional, but good practice
+  role_id: approle_role_id123
+  secret_id: approle_secret_id1234
+
+# fallback if above doesn't work or exist
+userpass:
+  path: auth/userpass/users/Example
+  password: The quick brown fox jumps over the lazy dog.
