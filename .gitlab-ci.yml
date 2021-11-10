@@ -1,0 +1,6 @@
+compile:
+  stage: build
+  image:
+    name: docker.io/library/golang:alpine
+  script:
+    - go build -o /tmp/vk ./cmd/vk
