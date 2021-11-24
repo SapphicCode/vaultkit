@@ -84,6 +84,7 @@ func login(logger zerolog.Logger, vault *hvault.Client) {
 	tokens := make([]string, 0, 4)
 	// collect token sources
 	if token := viper.GetString("token"); token != "" {
+		logger.Debug().Msg("Trying config or environment as token source.")
 		tokens = append(tokens, token)
 	}
 	if tokenFile := tokenFilePath(); tokenFile != "" {
@@ -160,6 +161,8 @@ func login(logger zerolog.Logger, vault *hvault.Client) {
 func main() {
 	initConfig()
 	logger := initLogger()
+
+	// TODO: Cobra
 
 	// create the Vault client
 	vault, err := hvault.NewClient(&hvault.Config{
