@@ -4,7 +4,10 @@ logLevel: info # // warn/info/debug/trace
 
 address: https://127.0.0.1:8200
 token: optional vault token
-# NOTE: setting the token here takes precedence over ~/.vault-token, use with care
+
+# the file to try reading / writing for token persistence (tilde gets expanded to $HOME)
+# set to empty string to disable
+token_file: ~/.vault-token
 
 # fallbacks if token expires / nonexistant
 approle:
