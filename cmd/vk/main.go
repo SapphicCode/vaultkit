@@ -130,10 +130,10 @@ func login(logger zerolog.Logger, vault *hvault.Client) {
 	viper.UnmarshalKey("approle", approle)
 	if approle.Validate() {
 		logger.Info().Msg("Attempting AppRole authentication...")
-		secret, err := vault.Auth().Login(context.Background(), approle)
+		_, err := vault.Auth().Login(context.Background(), approle)
 		if err != nil {
 			logger.Debug().Err(err).Msg("Error signing in with AppRole.")
-		} else if secret.Auth != nil {
+		} else {
 			logger.Info().Msg("Authenticated with AppRole.")
 			return
 		}
@@ -144,10 +144,10 @@ func login(logger zerolog.Logger, vault *hvault.Client) {
 	viper.UnmarshalKey("userpass", userpass)
 	if userpass.Validate() {
 		logger.Info().Msg("Attempting userpass authentication...")
-		secret, err := vault.Auth().Login(context.Background(), userpass)
+		_, err := vault.Auth().Login(context.Background(), userpass)
 		if err != nil {
 			logger.Debug().Err(err).Msg("Error signing in with userpass.")
-		} else if secret.Auth != nil {
+		} else {
 			logger.Info().Msg("Authenticated with userpass.")
 			return
 		}
