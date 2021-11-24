@@ -8,6 +8,9 @@ token: optional vault token
 # the file to try reading / writing for token persistence (tilde gets expanded to $HOME)
 # set to empty string to disable
 token_file: ~/.vault-token
+# the threshold at which to attempt renewal
+# set to 0 to disable
+token_renewal_threshold: 0.5
 
 # fallbacks if token expires / nonexistant
 approle:

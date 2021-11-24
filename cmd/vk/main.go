@@ -28,6 +28,7 @@ func initConfig() {
 	viper.BindEnv("token", "VAULT_TOKEN")
 	viper.SetDefault("approle.path", "auth/approle/login")
 	viper.SetDefault("token_file", "~/.vault-token")
+	viper.SetDefault("token_renewal_threshold", 0.5)
 
 	// global search paths
 	viper.AddConfigPath("/etc/vk/")
@@ -109,7 +110,7 @@ func login(logger zerolog.Logger, vault *hvault.Client) {
 			}
 
 			tokenLifespan := float32(lookup.TTL) / float32(lookup.CreationTTL)
-			if tokenLifespan < 0.5 {
+			if tokenLifespan < float32(viper.GetFloat64("token_renewal_threshold")) {
 				secret, _ := vault.Logical().Write("auth/token/renew-self", nil)
 				if len(secret.Warnings) == 0 {
 					logger.Debug().Msg("Renewed token.")
