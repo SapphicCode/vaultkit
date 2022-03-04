@@ -71,6 +71,7 @@ func main() {
 		return
 	}
 
+	// gather prerequisites
 	loginCommand := loginCommand(logger, vault)
 
 	// root command
@@ -96,8 +97,12 @@ func main() {
 			return loginCommand.RunE(cmd, args)
 		},
 	}
+	// root: flags
 	mainCommand.PersistentFlags().BoolP("no-auth", "A", false, "prevents auto-login")
+	// root: sub-commands
 	mainCommand.AddCommand(loginCommand)
+
+	// finally, execute
 	err = mainCommand.Execute()
 	if err != nil {
 		fmt.Println(err)
